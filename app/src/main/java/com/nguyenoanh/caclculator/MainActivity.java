@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnMul;
     private Button btnDiv;
 
-    private Button btnCham;
-    private Button btnBang;
+    private Button btnPoint;
+    private Button btnEqual;
     private Button btnClear;
     private Button btnClearAll;
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setEventClickViews();
     }
 
-    // Ket noi bien voi cac button
+    // Kết nối biến với các button
     private void initWidget() {
         edtInput = (EditText) findViewById(R.id.edtInput);
         tvOutput = (TextView) findViewById(R.id.tvOutput_result);
@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMul = (Button) findViewById(R.id.btnMul);
         btnDiv = (Button) findViewById(R.id.btnDiv);
 
-        btnCham = (Button) findViewById(R.id.btnCham);
-        btnBang = (Button) findViewById(R.id.btnBang);
+        btnPoint = (Button) findViewById(R.id.btnCham);
+        btnEqual = (Button) findViewById(R.id.btnBang);
         btnClear = (Button) findViewById(R.id.btnC);
         btnClearAll = (Button) findViewById(R.id.btnCE);
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnClose = (Button) findViewById(R.id.btnClose);
     }
 
-    // Cho cac view bat su kien onClick (moi co the bat su kien)
+    // Cho các view bắt sự kiện onClick
     public void setEventClickViews() {
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMul.setOnClickListener(this);
         btnDiv.setOnClickListener(this);
 
-        btnCham.setOnClickListener(this);
-        btnBang.setOnClickListener(this);
+        btnPoint.setOnClickListener(this);
+        btnEqual.setOnClickListener(this);
         btnClear.setOnClickListener(this);
         btnClearAll.setOnClickListener(this);
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            // Cac so
+            // Các số
             case R.id.btn0:
                 edtInput.append("0");
                 break;
@@ -157,7 +157,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnClose:
                 edtInput.append(")");
                 break;
-            // Cac toan tu
+
+            // Các toán tử
             case R.id.btnPlus:
                 edtInput.append("+");
                 break;
@@ -171,15 +172,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 edtInput.append("/");
                 break;
 
+            // Các phím chức năng
             case R.id.btnCham:
                 edtInput.append(".");
                 break;
             case R.id.btnC:
-                BaseInputConnection textFieldInputConnection = new BaseInputConnection(edtInput, true);
-                textFieldInputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                String numberAfterRemove = deleteNumber (edtInput.getText ().toString ());
+                edtInput.setText (numberAfterRemove);
                 break;
             case R.id.btnCE:
                 edtInput.setText("");
+                tvOutput.setText("Result");
                 break;
             case R.id.btnBang:
                 String pattern = "###.#######";
@@ -191,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 // Thuật toán tính toán biểu thức
                 if(arrOperation.size()>=arrNumber.size() ||arrOperation.size()<1){
-                    tvOutput.setText("Lỗi định dạng");
+                    tvOutput.setText("Error");
                 }else {
                     for (int i = 0; i < (arrNumber.size() - 1); i++) {
                         switch (arrOperation.get(i)) {
@@ -234,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //Mảng chứa các toan tu
+    //Mảng chứa các toán tử
     public ArrayList<String> arrOperation;
     //Mảng chứa các số
     public ArrayList<Double> arrNumber;
@@ -264,10 +267,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return 0;
     }
+
+    public String deleteNumber(String number){
+        int length = number.length ();
+        String temp = number.substring (0, length - 1);
+        return temp;
+    }
+
     //Lấy tất cả các số lưu vào mảng arrNumber
     public void addNumber(String stringInput) {
         arrNumber = new ArrayList<>();
-        // Lay ra cac con so
+        // Lấy ra các con số
         Pattern regex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
         Matcher matcher = regex.matcher(stringInput);
         while(matcher.find()){
