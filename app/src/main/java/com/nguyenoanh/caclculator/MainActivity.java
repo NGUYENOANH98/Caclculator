@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMul = (Button) findViewById(R.id.btnMul);
         btnDiv = (Button) findViewById(R.id.btnDiv);
 
-        btnPoint = (Button) findViewById(R.id.btnCham);
-        btnEqual = (Button) findViewById(R.id.btnBang);
+        btnPoint = (Button) findViewById(R.id.btnPoint);
+        btnEqual = (Button) findViewById(R.id.btnEqual);
         btnClear = (Button) findViewById(R.id.btnC);
         btnClearAll = (Button) findViewById(R.id.btnCE);
 
@@ -150,7 +150,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn9:
                 edtInput.append("9");
                 break;
-            // Cac ngoac ( va )
+
+            // Các ngoặc '(' và ')'
             case R.id.btnOpen:
                 edtInput.append("(");
                 break;
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             // Các phím chức năng
-            case R.id.btnCham:
+            case R.id.btnPoint:
                 edtInput.append(".");
                 break;
             case R.id.btnC:
@@ -184,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 edtInput.setText("");
                 tvOutput.setText("Result");
                 break;
-            case R.id.btnBang:
+            case R.id.btnEqual:
                 String pattern = "###.#######";
                 DecimalFormat df = new DecimalFormat(pattern);
 
@@ -231,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                     Log.d(tag, "OnClick: "+result);
-                    // Format lai ket qua hien thi
+                    // Format lại kết quả hiển thị
                     tvOutput.setText(df.format(result) + "");
                 }
         }
